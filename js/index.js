@@ -174,10 +174,10 @@ function searchProducts() {
 
 }
 
-function clearDataBase() {
+// function clearDataBase() {
 
-    localStorage.removeItem(localStorageName);
-    productList = [];
-    displayTheProduct();
-    //hello
-}
+//     localStorage.removeItem(localStorageName);
+//     productList = [];
+//     displayTheProduct();
+//     //hello
+// }
