@@ -177,6 +177,7 @@ function searchProducts() {
 function clearDataBase() {
 
     localStorage.removeItem(localStorageName);
-    productList=[];
+    productList = [];
     displayTheProduct();
+    //hello
 }
