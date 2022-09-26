@@ -177,5 +177,6 @@ function searchProducts() {
 function clearDataBase() {
 
     localStorage.removeItem(localStorageName);
+    productList=[];
     displayTheProduct();
 }
