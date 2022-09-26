@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CRUD System</title>
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+    <section>
+        <div class=" container">
+
+            <h1 class="m-auto text-center py-5 text-decoration-underline text-danger">The CRUD System</h1>
+            <form>
+
+                <div class=" mb-4">
+                    <label for="productName">Product Name</label>
+                    <input type="text" name="" id="productName" class=" form-control">
+                </div>
+
+                <div class=" mb-4">
+                    <label for="productPrice">Product Price</label>
+                    <input type="number" name="" id="productPrice" class=" form-control">
+                </div>
+
+                <div class=" mb-4">
+                    <label for="productCategory">Product Category</label>
+                    <select class="form-select" id="productCategory">
+                        <option value="none">-- Chose the category --</option>
+                        <option value="Mobile">Mobile</option>
+                        <option value="Labtop">Labtop</option>
+                        <option value="Bags">Bags</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="productDescription">Product Description</label>
+                    <textarea class=" form-control" id="productDescription"></textarea>
+                </div>
+
+                <button id="btnadd" type="button" class="btn btn-outline-info my-4 me-3" onclick="addProduct()">Add
+                    Product</button>
+
+                <button id="btnedit" type="button" class="btn btn-outline-dark my-4 me-3" onclick="editProduct()">Save
+                    Updates</button>
+
+                <button type="button" class="btn btn-outline-danger my-4" onclick="clearProduct()">Clear Form</button>
+            </form>
+
+            <input id="searchInput" onkeyup="searchProducts()" type="search" class=" form-control w-50 m-auto"
+                placeholder="Search for the product....">
+
+
+            <div class=" d-flex justify-content-end align-items-end my-4">
+                <button type="button" class="btn btn-danger" onclick="clearDataBase()">Clear Database</button>
+            </div>
+
+            <table class="table table-striped-columns table-bordered text-center">
+                <thead>
+                    <tr>
+                        <th>Index</th>
+                        <th>Product Name</th>
+                        <th>Product Price</th>
+                        <th>Product Category</th>
+                        <th>Product Description</th>
+                        <th>Update</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+
+                <tbody id="tableBody">
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <script src="js/index.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
