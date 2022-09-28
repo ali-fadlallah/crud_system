@@ -14,8 +14,8 @@ var btnEdit = document.getElementById("btnedit");
 var btnclearDatabase = document.getElementById("btnclearDatabase");
 var currentProductIndex = 0;
 var productList = [];
-var regexProductName = /^[a-zA-Z]{3,20}$/;
-var regexProductPrice = /^[1-9][0-9]{1,4}$/;
+var regexProductName = /^[a-zA-Z]{3,100}$/;
+var regexProductPrice = /^[1-9][0-9][0-9][0-9]?$/;
 var regexProductDescription = /^[a-zA-Z0-9]{3,50}$/;
 
 btnEditProduct("none");
