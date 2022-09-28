@@ -3,11 +3,20 @@ var productPrice = document.getElementById("productPrice");
 var productCategory = document.getElementById("productCategory");
 var productDescription = document.getElementById("productDescription");
 var searchInput = document.getElementById("searchInput");
+var tableProducts = document.getElementById("tableProducts");
+var alertName = document.getElementById("alertName");
+var alertPrice = document.getElementById("alertPrice");
+var alertCate = document.getElementById("alertCate");
+var alertDesc = document.getElementById("alertDesc");
 var localStorageName = "sharedData";
 var btnAdd = document.getElementById("btnadd");
 var btnEdit = document.getElementById("btnedit");
+var btnclearDatabase = document.getElementById("btnclearDatabase");
 var currentProductIndex = 0;
 var productList = [];
+var regexProductName = /^[a-zA-Z]{3,20}$/;
+var regexProductPrice = /^[1-9][0-9]{1,4}$/;
+var regexProductDescription = /^[a-zA-Z0-9]{3,50}$/;
 
 btnEditProduct("none");
 
@@ -19,11 +28,11 @@ if (localStorage.getItem(localStorageName) != null) {
 
 function addProduct() {
 
-    if (productCategory.value == "none") {
+    if (validationProductName() && validationProductPrice() && validationProductCate() == false && validationProductDesc()) {
 
-        alert("please choose the category");
-
-    } else {
+        productName.classList.remove("is-valid");
+        productPrice.classList.remove("is-valid");
+        productDescription.classList.remove("is-valid");
 
         var products =
         {
@@ -38,6 +47,7 @@ function addProduct() {
         localStorage.setItem(localStorageName, JSON.stringify(productList));
         displayTheProduct();
         clearProduct();
+
     }
 
 }
@@ -63,7 +73,20 @@ function displayTheProduct() {
         </tr>`
     };
 
-    document.getElementById("tableBody").innerHTML = temp;
+    if (productList.length != 0) {
+
+        document.getElementById("tableBody").innerHTML = temp;
+        tableProducts.classList.remove("d-none")
+        searchInput.classList.remove("d-none")
+        btnclearDatabase.classList.remove("d-none")
+
+    } else {
+
+        tableProducts.classList.add("d-none")
+        searchInput.classList.add("d-none")
+        btnclearDatabase.classList.add("d-none")
+
+    }
 }
 
 function clearProduct() {
@@ -101,11 +124,12 @@ function updateProduct(indexPath) {
 function editProduct() {
 
 
-    if (productCategory.value == "none") {
+    if (validationProductName() && validationProductPrice() && validationProductCate() == false && validationProductDesc()) {
 
-        alert("please choose the category");
+        productName.classList.remove("is-valid");
+        productPrice.classList.remove("is-valid");
+        productDescription.classList.remove("is-valid");
 
-    } else {
 
         var products =
         {
@@ -122,9 +146,7 @@ function editProduct() {
         displayTheProduct();
         clearProduct();
 
-
     }
-
 
 }
 
@@ -179,4 +201,100 @@ function clearDataBase() {
     localStorage.removeItem(localStorageName);
     productList = [];
     displayTheProduct();
+}
+
+// productName.addEventListener("blur", validationProductName);
+function validationProductName() {
+
+    if (regexProductName.test(productName.value) == true) {
+
+        productName.classList.add("is-valid");
+        productName.classList.remove("is-invalid");
+
+        alertName.classList.add("d-none");
+        alertName.classList.remove("d-block");
+
+        return true;
+
+
+    } else {
+
+        productName.classList.add("is-invalid");
+        productName.classList.remove("is-valid");
+
+        alertName.classList.add("d-block");
+        alertName.classList.remove("d-none");
+        return false;
+
+    }
+
+}
+
+// productPrice.addEventListener("blur", validationProductPrice);
+function validationProductPrice() {
+
+    if (regexProductPrice.test(productPrice.value) == true) {
+
+        productPrice.classList.add("is-valid");
+        productPrice.classList.remove("is-invalid");
+
+        alertPrice.classList.add("d-none")
+        alertPrice.classList.remove("d-block")
+        return true;
+
+    } else {
+
+        productPrice.classList.add("is-invalid");
+        productPrice.classList.remove("is-valid");
+
+        alertPrice.classList.add("d-block")
+        alertPrice.classList.remove("d-none")
+        return false;
+
+    }
+}
+
+function validationProductCate() {
+
+    if (productCategory.value == "none") {
+
+        alertCate.classList.remove("d-none");
+        alertCate.classList.add("d-block");
+
+        return true;
+
+    } else {
+
+        alertCate.classList.add("d-none");
+        alertCate.classList.remove("d-block");
+        return false;
+
+    }
+}
+
+// productDescription.addEventListener("blur", validationProductDesc);
+function validationProductDesc() {
+
+    if (regexProductDescription.test(productDescription.value) == true) {
+
+        productDescription.classList.add("is-valid");
+        productDescription.classList.remove("is-invalid");
+
+        alertDesc.classList.add("d-none");
+        alertDesc.classList.remove("d-block");
+
+        return true;
+
+    } else {
+
+        productDescription.classList.add("is-invalid");
+        productDescription.classList.remove("is-valid");
+
+        alertDesc.classList.remove("d-none");
+        alertDesc.classList.add("d-block");
+
+        return false;
+
+
+    }
 }

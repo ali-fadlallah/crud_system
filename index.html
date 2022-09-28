@@ -24,11 +24,16 @@
                 <div class=" mb-4">
                     <label for="productName">Product Name</label>
                     <input type="text" name="" id="productName" class=" form-control">
+                    <div id="alertName" class="mt-1 py-2 alert alert-danger d-none"> The product name must be english
+                        characters only</div>
                 </div>
 
                 <div class=" mb-4">
                     <label for="productPrice">Product Price</label>
                     <input type="number" name="" id="productPrice" class=" form-control">
+                    <div id="alertPrice" class="mt-1 py-2 alert alert-danger d-none"> The number must be minium 10 and
+                        max 99999</div>
+
                 </div>
 
                 <div class=" mb-4">
@@ -39,31 +44,36 @@
                         <option value="Labtop">Labtop</option>
                         <option value="Bags">Bags</option>
                     </select>
+                    <div id="alertCate" class="mt-1 py-2 alert alert-danger d-none"> Please choose the category</div>
+
                 </div>
 
                 <div>
                     <label for="productDescription">Product Description</label>
                     <textarea class=" form-control" id="productDescription"></textarea>
+
+                    <div id="alertDesc" class="mt-1 py-2 alert alert-danger d-none"> The number must be minium 10
+                        characters and max 100</div>
                 </div>
 
                 <button id="btnadd" type="button" class="btn btn-outline-info my-4 me-3" onclick="addProduct()">Add
                     Product</button>
 
-                <button id="btnedit" type="button" class="btn btn-outline-dark my-4 me-3" onclick="editProduct()">Save
+                <button id="btnedit" type="button" class=" btn btn-outline-dark my-4 me-3" onclick="editProduct()">Save
                     Updates</button>
 
                 <button type="button" class="btn btn-outline-danger my-4" onclick="clearProduct()">Clear Form</button>
             </form>
 
-            <input id="searchInput" onkeyup="searchProducts()" type="search" class=" form-control w-50 m-auto"
+            <input id="searchInput" onkeyup="searchProducts()" type="search" class="d-none form-control w-50 m-auto"
                 placeholder="Search for the product....">
 
 
-            <div class=" d-flex justify-content-end align-items-end my-4">
+            <div id="btnclearDatabase" class=" d-none d-flex justify-content-end align-items-end my-4">
                 <button type="button" class="btn btn-danger" onclick="clearDataBase()">Clear Database</button>
             </div>
 
-            <table class="table table-striped-columns table-bordered text-center">
+            <table id="tableProducts" class="table table-striped-columns table-bordered text-center d-none">
                 <thead>
                     <tr>
                         <th>Index</th>
