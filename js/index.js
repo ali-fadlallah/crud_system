@@ -15,8 +15,8 @@ var btnclearDatabase = document.getElementById("btnclearDatabase");
 var currentProductIndex = 0;
 var productList = [];
 var regexProductName = /^[a-zA-Z]{3,100}$/;
-var regexProductPrice = /^[1-9][0-9][0-9][0-9]?$/;
-var regexProductDescription = /^[a-zA-Z0-9]{3,50}$/;
+var regexProductPrice = /^([1-9][0-9]{0,3}|10000)$/;
+var regexProductDescription = /^[a-zA-Z0-9]{3,100}$/;
 
 btnEditProduct("none");
 
@@ -30,9 +30,7 @@ function addProduct() {
 
     if (validationProductName() && validationProductPrice() && validationProductCate() == false && validationProductDesc()) {
 
-        productName.classList.remove("is-valid");
-        productPrice.classList.remove("is-valid");
-        productDescription.classList.remove("is-valid");
+        removeInvalidOrValid();
 
         var products =
         {
@@ -96,6 +94,7 @@ function clearProduct() {
     productCategory.value = "none";
     productDescription.value = "";
 
+    removeInvalidOrValid();
     btnEditProduct("none");
 
     btnAddProduct("inline-block");
@@ -297,4 +296,22 @@ function validationProductDesc() {
 
 
     }
+}
+
+
+function removeInvalidOrValid() {
+
+    productName.classList.remove("is-valid");
+    productPrice.classList.remove("is-valid");
+    productDescription.classList.remove("is-valid");
+
+    productName.classList.remove("is-invalid");
+    productPrice.classList.remove("is-invalid");
+    productDescription.classList.remove("is-invalid");
+
+    alertName.classList.replace("d-block", "d-none");
+    alertPrice.classList.replace("d-block", "d-none");
+    alertCate.classList.replace("d-block", "d-none");
+    alertDesc.classList.replace("d-block", "d-none");
+
 }
