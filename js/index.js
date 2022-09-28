@@ -196,7 +196,7 @@ function searchProducts() {
 }
 
 function clearDataBase() {
-
+    clearProduct()
     localStorage.removeItem(localStorageName);
     productList = [];
     displayTheProduct();
