@@ -32,12 +32,21 @@ function addProduct() {
 
         removeInvalidOrValid();
 
+        var currentdate = new Date();
+        var datetime = currentdate.getDate() + "/"
+            + (currentdate.getMonth() + 1) + "/"
+            + currentdate.getFullYear() + " @ "
+            + currentdate.getHours() + ":"
+            + currentdate.getMinutes() + ":"
+            + currentdate.getSeconds();
+
         var products =
         {
             name: productName.value,
             price: productPrice.value,
             category: productCategory.value,
             description: productDescription.value,
+            addedAt: datetime,
         };
 
 
@@ -67,6 +76,8 @@ function displayTheProduct() {
 
         <td><button class="btn btn-outline-danger" onclick="deleteProduct(`+ i + `)">Delete</button></td>  
               
+        <td>`+ productList[i].addedAt + `</td> 
+
         </tr>`
     };
 
