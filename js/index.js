@@ -57,8 +57,7 @@ function displayTheProduct() {
     for (var i = 0; i < productList.length; i++) {
 
         temp += `<tr>
-        
-        <td>`+ i + `</td>
+        <td>`+ (i + 1) + `</td>
         <td>`+ productList[i].name + `</td>
         <td>`+ productList[i].price + `</td>
         <td>`+ productList[i].category + `</td>
@@ -297,7 +296,6 @@ function validationProductDesc() {
 
     }
 }
-
 
 function removeInvalidOrValid() {
 
