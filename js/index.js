@@ -8,13 +8,14 @@ var alertName = document.getElementById("alertName");
 var alertPrice = document.getElementById("alertPrice");
 var alertCate = document.getElementById("alertCate");
 var alertDesc = document.getElementById("alertDesc");
+var alertAlreadyAdded = document.getElementById("alertAlreadyAdded");
 var localStorageName = "sharedData";
 var btnAdd = document.getElementById("btnadd");
 var btnEdit = document.getElementById("btnedit");
 var btnclearDatabase = document.getElementById("btnclearDatabase");
 var currentProductIndex = 0;
 var productList = [];
-var regexProductName = /^[a-zA-Z ]{3,100}$/;
+var regexProductName = /^[a-zA-Z1-9ا-ي أ]{3,100}$/;
 var regexProductPrice = /^([1-9][0-9]{0,3}|10000)$/;
 var regexProductDescription = /^[a-zA-Z0-9 ]{3,100}$/;
 
@@ -29,8 +30,6 @@ if (localStorage.getItem(localStorageName) != null) {
 function addProduct() {
 
     if (validationProductName() && validationProductPrice() && validationProductCate() == false && validationProductDesc()) {
-
-        removeInvalidOrValid();
 
         var currentdate = new Date();
         var datetime = currentdate.getDate() + "/"
@@ -50,10 +49,19 @@ function addProduct() {
         };
 
 
-        productList.push(products);
-        localStorage.setItem(localStorageName, JSON.stringify(productList));
-        displayTheProduct();
-        clearProduct();
+        if (checkAddedProduct()) {
+
+            alertAlreadyAdded.classList.remove("d-none");
+
+        } else {
+
+            removeInvalidOrValid();
+            productList.push(products);
+            localStorage.setItem(localStorageName, JSON.stringify(productList));
+            displayTheProduct();
+            clearProduct();
+
+        }
 
     }
 
@@ -68,7 +76,7 @@ function displayTheProduct() {
         temp += `<tr>
         <td>`+ (i + 1) + `</td>
         <td>`+ productList[i].name + `</td>
-        <td>`+ productList[i].price + `</td>
+        <td>`+ productList[i].price + ` EGP</td>
         <td>`+ productList[i].category + `</td>
         <td>`+ productList[i].description + `</td> 
 
@@ -103,10 +111,9 @@ function clearProduct() {
     productPrice.value = "";
     productCategory.value = "none";
     productDescription.value = "";
-
     removeInvalidOrValid();
     btnEditProduct("none");
-
+    alertAlreadyAdded.classList.add("d-none");
     btnAddProduct("inline-block");
 
 }
@@ -116,6 +123,8 @@ function deleteProduct(indexPath) {
     productList.splice(indexPath, 1);
     localStorage.setItem(localStorageName, JSON.stringify(productList));
     displayTheProduct();
+    clearProduct();
+    removeInvalidOrValid();
 }
 
 function updateProduct(indexPath) {
@@ -148,12 +157,21 @@ function editProduct() {
             description: productDescription.value,
         };
 
-        productList[currentProductIndex] = products;
-        localStorage.setItem(localStorageName, JSON.stringify(productList));
-        btnEditProduct("none");
-        btnAddProduct("inline-block");
-        displayTheProduct();
-        clearProduct();
+
+        if (checkAddedProduct()) {
+
+            alertAlreadyAdded.classList.remove("d-none");
+
+        } else {
+
+            productList[currentProductIndex] = products;
+            localStorage.setItem(localStorageName, JSON.stringify(productList));
+            btnEditProduct("none");
+            btnAddProduct("inline-block");
+            displayTheProduct();
+            clearProduct();
+
+        }
 
     }
 
@@ -182,11 +200,11 @@ function searchProducts() {
             temp +=
                 `<tr>
         
-            <td>`+ i + `</td>
+            <td>`+ (i + 1) + `</td>
             
             <td>` + productList[i].name.toLowerCase().replace(theSearchWord, "<span class='text-danger fw-bold'>" + theSearchWord + "</span>") + `</td>
 
-            <td>` + productList[i].price + `</td>
+            <td>` + productList[i].price + ` EGP</td>
 
             <td>` + productList[i].category.toLowerCase() + `</td>
 
@@ -195,6 +213,9 @@ function searchProducts() {
             <td><button class="btn btn-outline-warning" onclick="updateProduct(` + i + `)">Update</button></td>    
     
             <td><button class="btn btn-outline-danger" onclick="deleteProduct(` + i + `)">Delete</button></td>  
+
+            <td>`+ productList[i].addedAt + `</td> 
+
 
                 </tr>`
 
@@ -233,6 +254,8 @@ function validationProductName() {
 
         alertName.classList.add("d-block");
         alertName.classList.remove("d-none");
+        alertAlreadyAdded.classList.add("d-none");
+
         return false;
 
     }
@@ -247,8 +270,10 @@ function validationProductPrice() {
         productPrice.classList.add("is-valid");
         productPrice.classList.remove("is-invalid");
 
-        alertPrice.classList.add("d-none")
-        alertPrice.classList.remove("d-block")
+        alertPrice.classList.add("d-none");
+        alertPrice.classList.remove("d-block");
+        alertAlreadyAdded.classList.add("d-none");
+
         return true;
 
     } else {
@@ -276,6 +301,8 @@ function validationProductCate() {
 
         alertCate.classList.add("d-none");
         alertCate.classList.remove("d-block");
+        alertAlreadyAdded.classList.add("d-none");
+
         return false;
 
     }
@@ -301,6 +328,7 @@ function validationProductDesc() {
 
         alertDesc.classList.remove("d-none");
         alertDesc.classList.add("d-block");
+        alertAlreadyAdded.classList.add("d-none");
 
         return false;
 
@@ -322,5 +350,22 @@ function removeInvalidOrValid() {
     alertPrice.classList.replace("d-block", "d-none");
     alertCate.classList.replace("d-block", "d-none");
     alertDesc.classList.replace("d-block", "d-none");
+    alertAlreadyAdded.classList.add("d-none");
+
+}
+
+function checkAddedProduct() {
+
+    var checkByProductName = productName.value.toLowerCase();
+
+    for (var i = 0; i < productList.length; i++) {
+
+        if (productList[i].name.toLowerCase().includes(checkByProductName)) {
+
+            return true;
+
+        }
+
+    };
 
 }
