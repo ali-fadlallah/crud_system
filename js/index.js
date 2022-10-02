@@ -12,12 +12,15 @@ var alertAlreadyAdded = document.getElementById("alertAlreadyAdded");
 var localStorageName = "sharedData";
 var btnAdd = document.getElementById("btnadd");
 var btnEdit = document.getElementById("btnedit");
+var btndelete = document.getElementById("btndelete");
+var modalbody = document.getElementById("modelBody");
 var btnclearDatabase = document.getElementById("btnclearDatabase");
 var currentProductIndex = 0;
 var productList = [];
 var regexProductName = /^[a-zA-Z1-9ا-ي أ]{3,100}$/;
 var regexProductPrice = /^([1-9][0-9]{0,3}|10000)$/;
 var regexProductDescription = /^[a-zA-Z0-9 ]{3,100}$/;
+
 
 btnEditProduct("none");
 
@@ -82,7 +85,10 @@ function displayTheProduct() {
 
         <td><button class="btn btn-outline-warning" onclick="updateProduct(`+ i + `)">Update</button></td>    
 
-        <td><button class="btn btn-outline-danger" onclick="deleteProduct(`+ i + `)">Delete</button></td>  
+        <td>
+        <button" onclick="getProductName(`+ i + `)" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-outline-danger">Delete</button>
+      
+        </td>
               
         <td>`+ productList[i].addedAt + `</td> 
 
@@ -104,6 +110,19 @@ function displayTheProduct() {
 
     }
 }
+
+
+function getProductName(indexPath) {
+
+    currentProductIndex = indexPath;
+    modalbody.innerHTML = "Are you sure to delete  " + productList[currentProductIndex].name + " ?";
+}
+
+btndelete.addEventListener("click", function () {
+
+    deleteProduct(currentProductIndex);
+
+});
 
 function clearProduct() {
 
@@ -212,8 +231,15 @@ function searchProducts() {
     
             <td><button class="btn btn-outline-warning" onclick="updateProduct(` + i + `)">Update</button></td>    
     
-            <td><button class="btn btn-outline-danger" onclick="deleteProduct(` + i + `)">Delete</button></td>  
 
+
+            <td>
+            <button" onclick="getProductName(`+ i + `)" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-outline-danger">Delete</button>
+          
+            </td>
+    
+           
+            
             <td>`+ productList[i].addedAt + `</td> 
 
 
