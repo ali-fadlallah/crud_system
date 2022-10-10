@@ -385,7 +385,7 @@ function checkAddedProduct() {
 
     var checkByProductName = productName.value.toLowerCase();
 
-    newProductList = productList.find((product) => product.name.toLowerCase().includes(checkByProductName));
+    newProductList = productList.find((product) => product.name.toLowerCase() == checkByProductName);
 
 
     // var checkByProductName = productName.value.toLowerCase();
