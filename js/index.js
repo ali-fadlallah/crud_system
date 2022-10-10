@@ -17,6 +17,7 @@ var modalbody = document.getElementById("modelBody");
 var btnclearDatabase = document.getElementById("btnclearDatabase");
 var currentProductIndex = 0;
 var productList = [];
+var newProductList = [];
 var regexProductName = /^[a-zA-Z1-9ا-ي أ]{3,100}$/;
 var regexProductPrice = /^([1-9][0-9]{0,3}|10000)$/;
 var regexProductDescription = /^[a-zA-Z0-9 ]{3,100}$/;
@@ -52,7 +53,8 @@ function addProduct() {
         };
 
 
-        if (checkAddedProduct()) {
+        checkAddedProduct();
+        if (newProductList != undefined) {
 
             alertAlreadyAdded.classList.remove("d-none");
 
@@ -74,14 +76,14 @@ function displayTheProduct() {
 
     var temp = "";
 
-    for (var i = 0; i < productList.length; i++) {
+    productList.forEach((element, i) => {
 
         temp += `<tr>
         <td>`+ (i + 1) + `</td>
-        <td>`+ productList[i].name + `</td>
-        <td>`+ productList[i].price + ` EGP</td>
-        <td>`+ productList[i].category + `</td>
-        <td>`+ productList[i].description + `</td> 
+        <td>`+ element.name + `</td>
+        <td>`+ element.price + ` EGP</td>
+        <td>`+ element.category + `</td>
+        <td>`+ element.description + `</td> 
 
         <td><button class="btn btn-outline-warning" onclick="updateProduct(`+ i + `)">Update</button></td>    
 
@@ -90,10 +92,11 @@ function displayTheProduct() {
       
         </td>
               
-        <td>`+ productList[i].addedAt + `</td> 
+        <td>`+ element.addedAt + `</td> 
 
         </tr>`
-    };
+
+    });
 
     if (productList.length != 0) {
 
@@ -209,29 +212,26 @@ function btnEditProduct(displayName) {
 function searchProducts() {
 
     var theSearchWord = searchInput.value.toLowerCase();
-
     var temp = "";
 
-    for (var i = 0; i < productList.length; i++) {
+    productList.forEach((element, i) => {
 
-        if (productList[i].name.toLowerCase().includes(theSearchWord) || productList[i].category.toLowerCase().includes(theSearchWord)) {
+        if (element.name.toLowerCase().includes(theSearchWord) || element.category.toLowerCase().includes(theSearchWord)) {
 
             temp +=
                 `<tr>
         
             <td>`+ (i + 1) + `</td>
             
-            <td>` + productList[i].name.toLowerCase().replace(theSearchWord, "<span class='text-danger fw-bold'>" + theSearchWord + "</span>") + `</td>
+            <td>` + element.name.toLowerCase().replace(theSearchWord, "<span class='text-danger fw-bold'>" + theSearchWord + "</span>") + `</td>
 
-            <td>` + productList[i].price + ` EGP</td>
+            <td>` + element.price + ` EGP</td>
 
-            <td>` + productList[i].category.toLowerCase() + `</td>
+            <td>` + element.category.toLowerCase() + `</td>
 
-            <td>` + productList[i].description + `</td> 
+            <td>` + element.description + `</td> 
     
             <td><button class="btn btn-outline-warning" onclick="updateProduct(` + i + `)">Update</button></td>    
-    
-
 
             <td>
             <button" onclick="getProductName(`+ i + `)" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-outline-danger">Delete</button>
@@ -240,13 +240,14 @@ function searchProducts() {
     
            
             
-            <td>`+ productList[i].addedAt + `</td> 
+            <td>`+ element.addedAt + `</td> 
 
 
                 </tr>`
 
         }
-    };
+
+    });
 
     document.getElementById("tableBody").innerHTML = temp;
 
@@ -384,14 +385,19 @@ function checkAddedProduct() {
 
     var checkByProductName = productName.value.toLowerCase();
 
-    for (var i = 0; i < productList.length; i++) {
+    newProductList = productList.find((product) => product.name.toLowerCase().includes(checkByProductName));
 
-        if (productList[i].name.toLowerCase().includes(checkByProductName)) {
 
-            return true;
+    // var checkByProductName = productName.value.toLowerCase();
 
-        }
+    // for (var i = 0; i < productList.length; i++) {
 
-    };
+    //     if (productList[i].name.toLowerCase().includes(checkByProductName)) {
+
+    //         return true;
+
+    //     }
+
+    // };
 
 }
