@@ -1,3 +1,3 @@
 # Crud system
 
-new update
+Site: https://ali-fadlallah.github.io/crud_system
